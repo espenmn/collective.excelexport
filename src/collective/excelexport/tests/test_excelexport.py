@@ -110,16 +110,16 @@ ce sera moi.""",
         output = self.portal.container.unrestrictedTraverse('@@collective.excelexportcsv')()
         generated_path = self._get_generated_filepath(output, 'test.csv')
         lines = csvreader(open(generated_path), dialect='excel', delimiter=';')
-        headers_row = lines.next()
+        headers_row = next(lines)
         self.assertEqual(headers_row, ['Name', 'Biography',
                                        'Birth date', 'subscription',
                                        'amount', 'Languages', 'Photo', 'Related Items'])
-        row1 = lines.next()
+        row1 = next(lines)
         self.assertEqual(row1, ['John Doe',
                                 'Longtemps, je me suis couch\xe9 de bonne heure',
                                 '1980/07/24', 'silver', '100',
                                 'English\nFran\xe7ais', 'logoplone.png', ''])
-        row2 = lines.next()
+        row2 = next(lines)
         self.assertEqual(row2, ['John Smith',
                                 "Je forme une entreprise qui n'eut jamais d'exem...",
                                 '1981/07/24', '', '100',

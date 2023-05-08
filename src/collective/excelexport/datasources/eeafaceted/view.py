@@ -1,6 +1,8 @@
 from copy import copy
-import urllib
 from eea.facetednavigation.criteria.interfaces import ICriteria
+
+
+from six.moves import urllib
 
 
 class ExportUrl(object):
@@ -29,5 +31,5 @@ class ExportUrl(object):
 
         params['excelexport.policy'] = 'eea.facetednavigation'
         export_url = "%s/@@collective.excelexport?%s" % (self.context.absolute_url(),
-                                                         urllib.urlencode(params, doseq=True))
+                                                         urllib.parse.urlencode(params, doseq=True))
         return export_url

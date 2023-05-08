@@ -53,6 +53,7 @@ setup(
             "plone.app.dexterity",
             "plone.app.relationfield",
             "xlrd",
+            "medialog.controlpanel"
         ]
     },
     entry_points="""

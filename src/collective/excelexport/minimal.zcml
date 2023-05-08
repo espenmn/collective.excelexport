@@ -24,6 +24,15 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
   />
 
+
+  <genericsetup:registerProfile
+      name="uninstall"
+      title="collective.excelexport uninstall"
+      directory="profiles/uninstall"
+      description="Installs the collective.excelexport add-on."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+  />
+
   <genericsetup:importStep
       name="collectiveexcelexport-postInstall"
       title="collective.excelexport post_install import step"
@@ -31,13 +40,13 @@
       handler=".setuphandlers.post_install">
   </genericsetup:importStep>
 
-  <browser:page name="collective.excelexport"
+  <browser:page name="excelexport"
                 for="*"
                 class=".view.ExcelExport"
                 permission="zope2.View"
   />
 
-  <browser:page name="collective.excelexportcsv"
+  <browser:page name="excelexportcsv"
                 for="*"
                 class=".view.CSVExport"
                 permission="zope2.View"

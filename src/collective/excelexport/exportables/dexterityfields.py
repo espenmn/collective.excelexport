@@ -325,7 +325,19 @@ class CollectionFieldRenderer(BaseFieldRenderer):
     def render_value(self, obj):
         """Gets the value to render in excel file from content value
         """
+        #import pdb; pdb.set_trace()
         value = self.get_value(obj)
+
+        if isinstance(value, str):
+            value = self.get_value(obj)
+        elif isinstance(value, list):
+            if 'Title' in value:
+                value = value[1]
+            else:
+                value = value[0]['v']
+        else:
+            value = self.get_value(obj)
+
         value_type = self.field.value_type
         if not value_type:
             value_type = self.field
@@ -333,6 +345,8 @@ class CollectionFieldRenderer(BaseFieldRenderer):
         sub_renderer = getMultiAdapter(
             (value_type, self.context, self.request),
             interface=IExportable)
+
+        #*-import pdb; pdb.set_trace()
 
         return value and self.separator.join(
             [sub_renderer.render_collection_entry(obj, v)

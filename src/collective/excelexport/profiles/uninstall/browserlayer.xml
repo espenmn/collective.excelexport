@@ -1,0 +1,4 @@
+<layers>
+    <layer name="collective.excelexport"
+           remove="true" />
+</layers>

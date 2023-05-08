@@ -3,6 +3,10 @@
     xmlns:zcml="http://namespaces.zope.org/zcml"
     i18n_domain="collective.excelexport">
 
+  <adapter factory=".collection.FolderContentsDataSource"
+             provides="collective.excelexport.interfaces.IDataSource"
+  />
+
   <adapter factory=".folder.FolderContentsDataSource"
            provides="collective.excelexport.interfaces.IDataSource"
   />

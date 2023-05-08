@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <registry>
-  <record name="collective.excelexport.excluded_exportables">
+<records interface="collective.excelexport.interfaces.IExcelExportSettings">
+  <record name="excluded_exportables">
     <field type="plone.registry.field.List">
       <title xmlns:ns0="http://xml.zope.org/namespaces/i18n" ns0:domain="plone" ns0:translate="">Fields excluded by default excel export datasource</title>
       <value_type type="plone.registry.field.TextLine"/>
@@ -16,4 +17,5 @@
       <element>nextPreviousEnabled</element>
     </value>
   </record>
+</records>
 </registry>

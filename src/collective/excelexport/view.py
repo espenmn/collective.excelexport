@@ -1,11 +1,16 @@
 import datetime
 
+#python 2 support skipped
 try:
     from StringIO import StringIO  ## for Python 2
 except ImportError:
     from io import StringIO  ## for Python 3
+    from io import BytesIO
+    #buffer = BytesIO()
+
 from copy import copy
 from csv import writer as csvwriter
+import six
 
 import xlwt
 from DateTime import DateTime
@@ -25,7 +30,7 @@ class BaseExport(BrowserView):
         """
         if isinstance(render, Message):
             render = translate(render, context=self.request)
-        elif isinstance(render, unicode):
+        elif isinstance(render, six.text_type):
             pass
         elif render is None:
             render = u""
@@ -39,7 +44,7 @@ class BaseExport(BrowserView):
             except ValueError:
                 # when date < 1900
                 render = safe_unicode(render)
-        elif not isinstance(render, unicode):
+        elif not isinstance(render, six.text_type):
             render = safe_unicode(str(render))
 
         return render
@@ -133,7 +138,7 @@ class ExcelExport(BaseExport):
         return xldoc
 
     def get_data_buffer(self, sheetsinfo, policy=""):
-        string_buffer = StringIO()
+        buffer = BytesIO()
         try:
             styles = getMultiAdapter(
                 (self.context, self.request), interface=IStyles, name=policy
@@ -144,8 +149,8 @@ class ExcelExport(BaseExport):
         xldoc = self.get_xldoc(sheetsinfo, styles)
         doc = CompoundDoc.XlsDoc()
         data = xldoc.get_biff_data()
-        doc.save(string_buffer, data)
-        return string_buffer
+        doc.save(buffer, data)
+        return buffer
 
 
 class CSVExport(BaseExport):

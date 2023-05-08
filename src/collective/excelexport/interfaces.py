@@ -4,6 +4,15 @@
 from zope.interface import Interface, Attribute
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 
+from medialog.controlpanel.interfaces import \
+    IMedialogControlpanelSettingsProvider
+from plone.supermodel import model
+from plone.autoform.directives import widget
+from zope import schema
+from zope.interface import alsoProvides
+from zope.i18nmessageid import MessageFactory
+
+
 
 class ICollectiveExcelexportLayer(IDefaultBrowserLayer):
     """Marker interface that defines a browser layer."""
@@ -75,3 +84,24 @@ class IExportable(Interface):
         """Gets the style rendering of the
         base_style is the default style of a cell for content
         """
+
+
+
+
+class IExcelExportSettings(model.Schema):
+    """Adds settings to medialog.controlpanel"""
+
+    model.fieldset(
+        'Excelexport',
+        label='Excelexport',
+        fields=[
+            'excluded_exportables',]
+    )
+
+    excluded_exportables = schema.List(
+        title='Disable fields',
+        value_type= schema.TextLine(),
+        default=['allowDiscussion','allow_discussion','constrainTypesMod', 'excludeFromNav', 'exclude_from_nav','locallyAllowedTypes','immediatelyAddableTypes','nextPreviousEnabled',],
+    )
+
+alsoProvides(IExcelExportSettings, IMedialogControlpanelSettingsProvider)

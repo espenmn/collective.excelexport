@@ -45,9 +45,8 @@ class BaseContentsDataSource(object):
         self.context = context
         self.request = request
         if not self.excluded_exportables:
-            self.excluded_exportables = api.portal.get_registry_record(
-                name='collective.excelexport.excluded_exportables',
-                default=_CONFIGURATION_FIELDS)
+            self.excluded_exportables = api.portal.get_registry_record('collective.excelexport.interfaces.IExcelExportSettings.excluded_exportables')
+            #, default=_CONFIGURATION_FIELDS)
 
     def get_filename(self):
         """Gets the file name (without extension) of the exported excel
@@ -68,6 +67,7 @@ class BaseContentsDataSource(object):
             filtered_exportables = []
             for exportable in exportables:
                 name = get_name(exportable)
+                #print(name)
                 if name not in self.excluded_exportables:
                     filtered_exportables.append(exportable)
 
