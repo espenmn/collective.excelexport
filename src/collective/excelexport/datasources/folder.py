@@ -18,11 +18,14 @@ class FolderContentsDataSource(BaseContentsDataSource):
             self.context.getId(),
         )
 
+    #Note set depth in control panel
     def get_objects(self):
-        catalog = api.portal.get_tool('portal_catalog')
-        brains = catalog.searchResults(
-            REQUEST=self.request,
-            path={'query': '/'.join(self.context.getPhysicalPath()),
-                  'depth': 1},
-        )
+        #catalog = api.portal.get_tool('portal_catalog')
+
+        brains = api.content.find(self.context, depth=10)
+        #brains = catalog.searchResults(
+        #    REQUEST=self.request,
+        #    path={'query': '/'.join(self.context.getPhysicalPath()),
+        #          'depth': 10},
+        #)
         return [b.getObject() for b in brains]
